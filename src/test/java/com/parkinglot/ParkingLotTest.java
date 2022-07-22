@@ -26,4 +26,13 @@ public class ParkingLotTest {
 
         assertNull(parkingTicket);
     }
+
+    @Test
+    public void should_return_car_when_fetchCar_given_true_ticket(){
+        ParkingLot parkingLot=new ParkingLot(10);
+
+        ParkingTicket parkingTicket=new ParkingTicket();
+
+        assertNotNull(parkingLot.fetchCar(parkingTicket));
+    }
 }

@@ -25,4 +25,8 @@ public class ParkingLot {
     private boolean isSurplus(){
         return surplusCapacity>0;
     }
+
+    public Car fetchCar(ParkingTicket parkingTicket) {
+        return new Car();
+    }
 }
