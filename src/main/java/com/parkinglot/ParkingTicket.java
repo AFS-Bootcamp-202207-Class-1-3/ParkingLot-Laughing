@@ -4,11 +4,9 @@ import java.util.Objects;
 
 public class ParkingTicket {
     private int ticketID;
-    private Car car;
 
-    public ParkingTicket(int ticketID, Car car) {
+    public ParkingTicket(int ticketID) {
         this.ticketID = ticketID;
-        this.car = car;
     }
 
 
@@ -21,7 +19,7 @@ public class ParkingTicket {
         if (this == o) return true;
         if (!(o instanceof ParkingTicket)) return false;
         ParkingTicket that = (ParkingTicket) o;
-        return ticketID == that.ticketID && car == that.car;
+        return ticketID == that.ticketID;
     }
 
     @Override
@@ -29,7 +27,4 @@ public class ParkingTicket {
         return Objects.hash(ticketID);
     }
 
-    public Car getCar() {
-        return car;
-    }
 }

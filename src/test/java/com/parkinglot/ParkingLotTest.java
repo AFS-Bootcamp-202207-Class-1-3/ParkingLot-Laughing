@@ -44,14 +44,14 @@ public class ParkingLotTest {
         parkingLot.fetchCar(parkingTicket);
         //use ticket again
         Car car=parkingLot.fetchCar(parkingTicket);
-        assertNull(parkingLot.fetchCar(parkingTicket));
+        assertNull(car);
     }
 
     @Test
     public void should_return_null_when_fetchCar_given_wrong_ticket(){
         ParkingLot parkingLot=new ParkingLot(10);
 
-        ParkingTicket parkingTicket=new ParkingTicket(0,new Car("A123"));
+        ParkingTicket parkingTicket=new ParkingTicket(0);
 
         //not provide the ticket
         assertNull(parkingLot.fetchCar(parkingTicket));
