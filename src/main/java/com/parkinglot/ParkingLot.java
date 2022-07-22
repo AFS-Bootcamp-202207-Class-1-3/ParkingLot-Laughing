@@ -18,7 +18,7 @@ public class ParkingLot {
     public ParkingTicket park(Car car) {
         if(isSurplus()){
             int ticketID=generateTicketID();
-            ParkingTicket ticket=new ParkingTicket(ticketID);
+            ParkingTicket ticket=new ParkingTicket(ticketID,car);
             ticketList.add(ticket);
 
             this.surplusCapacity--;
@@ -38,9 +38,8 @@ public class ParkingLot {
     public Car fetchCar(ParkingTicket parkingTicket) {
         if(!ticketList.contains(parkingTicket)) return null;
 
-        Car car =new Car();
         this.surplusCapacity++;
         this.ticketList.remove(parkingTicket);
-        return car;
+        return parkingTicket.getCar();
     }
 }
