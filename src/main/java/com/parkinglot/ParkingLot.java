@@ -19,17 +19,16 @@ public class ParkingLot {
     }
 
     public ParkingTicket park(Car car) {
-        if (isSurplus()) {
-            int ticketID = generateTicketID(this.totalCapacity);
-            ParkingTicket ticket = new ParkingTicket(ticketID, car.getCarID());
-            ticketMap.put(ticket,car);
-
-            this.surplusCapacity--;
-            return ticket;
+        if (!isSurplus()) {
+            throw new NoAvailablePositionException();
         }
 
+        int ticketID = generateTicketID(this.totalCapacity);
+        ParkingTicket ticket = new ParkingTicket(ticketID, car.getCarID());
+        ticketMap.put(ticket,car);
 
-        return null;
+        this.surplusCapacity--;
+        return ticket;
     }
 
     private boolean isTicketIDExist(int ticketID){

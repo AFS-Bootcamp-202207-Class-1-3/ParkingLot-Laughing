@@ -18,13 +18,12 @@ public class ParkingLotTest {
     }
 
     @Test
-    public void should_return_null_when_park_given_car_no_position(){
+    public void should_return_no_available_position_when_park_given_car_no_position(){
         Car car=new Car("A123");
         ParkingLot parkingLot=new ParkingLot(0);
 
-        ParkingTicket parkingTicket=parkingLot.park(car);
-
-        assertNull(parkingTicket);
+        Exception exception=assertThrows(NoAvailablePositionException.class,()-> parkingLot.park(car));
+        assertEquals(exception.getMessage(),"No available position");
     }
 
     @Test
