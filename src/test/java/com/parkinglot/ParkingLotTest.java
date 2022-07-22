@@ -37,27 +37,16 @@ public class ParkingLotTest {
     }
 
     @Test
-    public void should_return_null_when_fetchCar_given_used_ticket(){
+    public void should_return_error_message_when_fetchCar_given_used_ticket(){
         ParkingLot parkingLot=new ParkingLot(10);
 
         ParkingTicket parkingTicket=parkingLot.park(new Car("A123"));;
         parkingLot.fetchCar(parkingTicket);
         //use ticket again
-        Car car=parkingLot.fetchCar(parkingTicket);
-        assertNull(car);
+        Exception exception=assertThrows(UnrecognizedParkingTicketException.class,()->parkingLot.fetchCar(parkingTicket));
+        assertEquals(exception.getMessage(),"Unrecognized parking ticket");
     }
 
-    @Test
-    public void should_return_null_when_fetchCar_given_wrong_ticket(){
-        ParkingLot parkingLot=new ParkingLot(10);
-
-        ParkingTicket parkingTicket=new ParkingTicket(0);
-
-        //not provide the ticket
-        assertNull(parkingLot.fetchCar(parkingTicket));
-        //no ticket
-        assertNull(parkingLot.fetchCar(null));
-    }
 
     @Test
     public void should_return_corresponding_car_when_fetchCar_given_ticket(){
@@ -71,4 +60,20 @@ public class ParkingLotTest {
         assertEquals(car1,parkingLot.fetchCar(ticket1));
         assertEquals(car2,parkingLot.fetchCar(ticket2));
     }
+
+    @Test
+    public void should_return_error_message_when_fetchCar_given_wrong_ticket(){
+        ParkingLot parkingLot=new ParkingLot(10);
+
+        ParkingTicket parkingTicket=new ParkingTicket(0,"A111");
+
+        //not provide the ticket
+       Exception exception1=assertThrows(UnrecognizedParkingTicketException.class,()->parkingLot.fetchCar(parkingTicket));
+       assertEquals(exception1.getMessage(),"Unrecognized parking ticket");
+        //no ticket
+        Exception exception2=assertThrows(UnrecognizedParkingTicketException.class,()->parkingLot.fetchCar(null));
+        assertEquals(exception2.getMessage(),"Unrecognized parking ticket");
+    }
+
+
 }

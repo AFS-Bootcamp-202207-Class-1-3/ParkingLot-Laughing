@@ -20,19 +20,32 @@ public class ParkingLot {
 
     public ParkingTicket park(Car car) {
         if (isSurplus()) {
-            int ticketID = generateTicketID();
-            ParkingTicket ticket = new ParkingTicket(ticketID);
+            int ticketID = generateTicketID(this.totalCapacity);
+            ParkingTicket ticket = new ParkingTicket(ticketID, car.getCarID());
             ticketMap.put(ticket,car);
 
             this.surplusCapacity--;
             return ticket;
         }
+
+
         return null;
     }
 
-    private int generateTicketID() {
+    private boolean isTicketIDExist(int ticketID){
+        for(ParkingTicket ticket: ticketMap.keySet()){
+            if(ticketID==ticket.getTicketID()) return true;
+        }
+        return false;
+    }
+    private int generateTicketID(int range) {
+        int result;
         Random rand = new Random();
-        return rand.nextInt(100);
+        do {
+            result=rand.nextInt(range);
+        }while (isTicketIDExist(result));
+
+        return result;
     }
 
     private boolean isSurplus() {
@@ -40,7 +53,9 @@ public class ParkingLot {
     }
 
     public Car fetchCar(ParkingTicket parkingTicket) {
-        if (parkingTicket == null || !ticketMap.containsKey(parkingTicket)) return null;
+        if (parkingTicket == null || !ticketMap.containsKey(parkingTicket)) {
+            throw new UnrecognizedParkingTicketException();
+        }
 
         this.surplusCapacity++;
         return this.ticketMap.remove(parkingTicket);
