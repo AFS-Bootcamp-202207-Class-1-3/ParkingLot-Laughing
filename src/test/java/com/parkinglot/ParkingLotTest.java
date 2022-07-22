@@ -20,7 +20,7 @@ public class ParkingLotTest {
     @Test
     public void should_return_null_when_park_given_car_no_position(){
         Car car=new Car();
-        ParkingLot parkingLot=new ParkingLot(10,0);
+        ParkingLot parkingLot=new ParkingLot(0);
 
         ParkingTicket parkingTicket=parkingLot.park(car);
 
@@ -40,8 +40,10 @@ public class ParkingLotTest {
     public void should_return_null_when_fetchCar_given_used_ticket(){
         ParkingLot parkingLot=new ParkingLot(10);
 
-        ParkingTicket parkingTicket=new ParkingTicket(0);
-
+        ParkingTicket parkingTicket=parkingLot.park(new Car());;
+        parkingLot.fetchCar(parkingTicket);
+        //use ticket again
+        Car car=parkingLot.fetchCar(parkingTicket);
         assertNull(parkingLot.fetchCar(parkingTicket));
     }
 
