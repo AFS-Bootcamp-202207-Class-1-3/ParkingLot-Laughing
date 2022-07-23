@@ -67,4 +67,9 @@ public class ParkingLot {
     public int getSurplusCapacity() {
         return surplusCapacity;
     }
+
+    public double getSurplusCapacityRate(){
+        if(totalCapacity==0) return 0.0;
+        return (double)surplusCapacity/totalCapacity;
+    }
 }
