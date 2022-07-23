@@ -31,6 +31,8 @@ public class StandardParkingBoy implements ParkingBoyInterface{
     public Car fetchCar(ParkingTicket parkingTicket) {
         if(!mapParkingTicketAndLot.containsKey(parkingTicket)) throw new UnrecognizedParkingTicketException();
         int parkingLotIndex=mapParkingTicketAndLot.get(parkingTicket);
+        mapParkingTicketAndLot.remove(parkingTicket);
         return parkingLots.get(parkingLotIndex).fetchCar(parkingTicket);
     }
+
 }
