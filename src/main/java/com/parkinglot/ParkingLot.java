@@ -59,4 +59,12 @@ public class ParkingLot {
         this.surplusCapacity++;
         return this.ticketMap.remove(parkingTicket);
     }
+
+    public int getTotalCapacity() {
+        return totalCapacity;
+    }
+
+    public int getSurplusCapacity() {
+        return surplusCapacity;
+    }
 }

@@ -1,6 +1,6 @@
 package com.parkinglot;
 
-public class ParkingBoy {
+public class ParkingBoy implements ParkingBoyInterface{
 
     private ParkingLot parkingLot;
 
@@ -15,4 +15,6 @@ public class ParkingBoy {
     public Car fetchCar(ParkingTicket parkingTicket) {
         return parkingLot.fetchCar(parkingTicket);
     }
+
+
 }

@@ -72,4 +72,5 @@ class ParkingBoyTest {
         Exception exception=assertThrows(NoAvailablePositionException.class,()-> parkingBoy.park(car));
         assertEquals(exception.getMessage(),"No available position");
     }
+
 }
