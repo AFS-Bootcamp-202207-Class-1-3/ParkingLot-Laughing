@@ -29,6 +29,7 @@ public class StandardParkingBoy implements ParkingBoyInterface{
 
     @Override
     public Car fetchCar(ParkingTicket parkingTicket) {
+        if(!mapParkingTicketAndLot.containsKey(parkingTicket)) throw new UnrecognizedParkingTicketException();
         int parkingLotIndex=mapParkingTicketAndLot.get(parkingTicket);
         return parkingLots.get(parkingLotIndex).fetchCar(parkingTicket);
     }
