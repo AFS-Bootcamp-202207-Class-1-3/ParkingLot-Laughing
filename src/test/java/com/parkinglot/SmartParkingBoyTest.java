@@ -41,4 +41,38 @@ class SmartParkingBoyTest {
         assertEquals(car1, parkingBoy.fetchCar(ticket1));
         assertEquals(car2, parkingBoy.fetchCar(ticket2));
     }
+
+    @Test
+    public void should_return_error_message_when_fetchCar_given_wrong_ticket(){
+        List<ParkingLot> parkingLots = Arrays.asList(new ParkingLot(10), new ParkingLot(10));
+        ParkingBoyInterface parkingBoy = new SmartParkingBoy(parkingLots);
+        ParkingTicket parkingTicket=new ParkingTicket(0,"A111");
+
+        //not provide the ticket
+        Exception exception1=assertThrows(UnrecognizedParkingTicketException.class,()->parkingBoy.fetchCar(parkingTicket));
+        assertEquals(exception1.getMessage(),"Unrecognized parking ticket");
+        //no ticket
+        Exception exception2=assertThrows(UnrecognizedParkingTicketException.class,()->parkingBoy.fetchCar(null));
+        assertEquals(exception2.getMessage(),"Unrecognized parking ticket");
+    }
+
+    @Test
+    public void should_return_error_message_when_fetchCar_given_used_ticket(){
+        List<ParkingLot> parkingLots = Arrays.asList(new ParkingLot(10), new ParkingLot(10));
+        ParkingBoyInterface parkingBoy = new StandardParkingBoy(parkingLots);
+        ParkingTicket parkingTicket=parkingBoy.park(new Car("A123"));;
+        parkingBoy.fetchCar(parkingTicket);
+        //use ticket again
+        Exception exception=assertThrows(UnrecognizedParkingTicketException.class,()->parkingBoy.fetchCar(parkingTicket));
+        assertEquals(exception.getMessage(),"Unrecognized parking ticket");
+    }
+
+    @Test
+    public void should_return_no_available_position_when_park_given_car_no_position(){
+        Car car=new Car("A123");
+        List<ParkingLot> parkingLots = Arrays.asList(new ParkingLot(0), new ParkingLot(0));
+        ParkingBoyInterface parkingBoy = new StandardParkingBoy(parkingLots);
+        Exception exception=assertThrows(NoAvailablePositionException.class,()-> parkingBoy.park(car));
+        assertEquals(exception.getMessage(),"No available position");
+    }
 }
