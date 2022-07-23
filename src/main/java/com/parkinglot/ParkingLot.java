@@ -47,7 +47,7 @@ public class ParkingLot {
         return result;
     }
 
-    private boolean isSurplus() {
+    public boolean isSurplus() {
         return surplusCapacity > 0;
     }
 

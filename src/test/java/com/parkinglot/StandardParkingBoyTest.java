@@ -20,4 +20,14 @@ class StandardParkingBoyTest {
         assertNotNull(parkingTicket);
     }
 
+    @Test
+    public void should_return_parking_ticket_when_park_given_a_car_and_first_is_full(){
+        List<ParkingLot> parkingLots = Arrays.asList(new ParkingLot(0),new ParkingLot(10));
+        ParkingBoyInterface parkingBoy=new StandardParkingBoy(parkingLots);
+
+        ParkingTicket parkingTicket=parkingBoy.park(new Car("A123"));
+
+        assertNotNull(parkingTicket);
+    }
+
 }

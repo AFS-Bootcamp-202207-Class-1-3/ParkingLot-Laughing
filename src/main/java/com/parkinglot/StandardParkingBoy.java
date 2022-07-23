@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class StandardParkingBoy implements ParkingBoyInterface{
-    private List<ParkingLot> parkingLots=new ArrayList<>();
+    private List<ParkingLot> parkingLots;
 
     public StandardParkingBoy(List<ParkingLot> parkingLots) {
         this.parkingLots = parkingLots;
@@ -12,7 +12,15 @@ public class StandardParkingBoy implements ParkingBoyInterface{
 
     @Override
     public ParkingTicket park(Car car) {
-        return parkingLots.get(0).park(car);
+        int parkingLotIndex;
+        for(parkingLotIndex=0;parkingLotIndex<parkingLots.size();parkingLotIndex++){
+            ParkingLot parkingLot=parkingLots.get(parkingLotIndex);
+            if(parkingLot.isSurplus()){
+                return parkingLot.park(car);
+            }
+        }
+
+       throw new NoAvailablePositionException();
     }
 
     @Override
