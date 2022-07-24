@@ -1,6 +1,6 @@
 package com.parkinglot;
 
-public class ParkingBoy implements ParkingBoyInterface{
+public class ParkingBoy {
 
     private ParkingLot parkingLot;
 

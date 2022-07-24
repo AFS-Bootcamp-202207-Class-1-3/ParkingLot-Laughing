@@ -5,34 +5,36 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class StandardParkingBoy implements ParkingBoyInterface{
+public class StandardParkingBoy{
     private List<ParkingLot> parkingLots;
-    private Map<ParkingTicket,Integer> mapParkingTicketAndLot=new HashMap<>();
+    private Map<ParkingTicket,ParkingLot> mapParkingTicketAndLot=new HashMap<>();
+
+    private ParkingStrategy parkingStrategy=new OrderedParkingStrategy();
     public StandardParkingBoy(List<ParkingLot> parkingLots) {
         this.parkingLots = parkingLots;
     }
 
-    @Override
     public ParkingTicket park(Car car) {
-        int parkingLotIndex;
-        for(parkingLotIndex=0;parkingLotIndex<parkingLots.size();parkingLotIndex++){
-            ParkingLot parkingLot=parkingLots.get(parkingLotIndex);
-            if(parkingLot.isSurplus()){
-                ParkingTicket parkingTicket=parkingLot.park(car);
-                mapParkingTicketAndLot.put(parkingTicket,parkingLotIndex);
-                return parkingTicket;
-            }
-        }
+       ParkingLot parkingLot=parkingStrategy.getFitParkingLot(this.parkingLots);
+       if(parkingLot==null) throw new NoAvailablePositionException();
 
-       throw new NoAvailablePositionException();
+        ParkingTicket parkingTicket=parkingLot.park(car);
+        mapParkingTicketAndLot.put(parkingTicket,parkingLot);
+        return parkingTicket;
     }
 
-    @Override
     public Car fetchCar(ParkingTicket parkingTicket) {
         if(!mapParkingTicketAndLot.containsKey(parkingTicket)) throw new UnrecognizedParkingTicketException();
-        int parkingLotIndex=mapParkingTicketAndLot.get(parkingTicket);
+        ParkingLot parkingLot=mapParkingTicketAndLot.get(parkingTicket);
         mapParkingTicketAndLot.remove(parkingTicket);
-        return parkingLots.get(parkingLotIndex).fetchCar(parkingTicket);
+        return parkingLot.fetchCar(parkingTicket);
     }
 
+    public ParkingStrategy getParkingStrategy() {
+        return parkingStrategy;
+    }
+
+    public void setParkingStrategy(ParkingStrategy parkingStrategy) {
+        this.parkingStrategy = parkingStrategy;
+    }
 }
